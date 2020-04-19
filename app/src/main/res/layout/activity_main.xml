@@ -30,6 +30,19 @@
         android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/ButtonSave"
+        android:text="Save"
+        android:textColor="#E81414"
+        android:textSize="40sp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/ButtonShow"
+        android:text="ShowList"
+        android:textColor="#E81414"
+        android:textSize="40sp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"

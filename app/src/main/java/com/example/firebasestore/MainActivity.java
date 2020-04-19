@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +24,7 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     EditText mEditTextTT ,mEditTextD;
-    Button mButtonSave;
+    Button mButtonSave, mButtonShow;
     ProgressDialog pd;
     FirebaseFirestore db;
 
@@ -45,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
                 //function call to upload data
                 uploaddata(title,Description);
 
+            }
+        });
+
+        mButtonShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ListActivity.class));
+                finish();
             }
         });
     }
@@ -85,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         mEditTextTT = findViewById(R.id.EditTitle);
         mEditTextD = findViewById(R.id.EditDescription);
         mButtonSave = findViewById(R.id.ButtonSave);
+        mButtonShow = findViewById(R.id.ButtonShow);
         pd = new ProgressDialog(this);
         db = FirebaseFirestore.getInstance();
     }

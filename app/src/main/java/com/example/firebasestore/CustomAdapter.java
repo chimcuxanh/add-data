@@ -1,6 +1,10 @@
 package com.example.firebasestore;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.text.Normalizer2;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +44,32 @@ public class CustomAdapter extends RecyclerView.Adapter<Viewholder>
                }
 
                @Override
-               public void onItemLongClick(View view, int position) {
+               public void onItemLongClick(View view, final int position) {
                    // this will be called when user long click
+                   //create alertDialog
+                   AlertDialog.Builder builder = new AlertDialog.Builder(listActivity);
+                   String[] option = {"Update","Delete"};
+                   builder.setItems(option, new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialog, int which) {
+                           if(which == 0)
+                           {
+                               String id = modelList.get(position).getId();
+                               String title = modelList.get(position).getTitle();
+                               String descrition = modelList.get(position).getDescription();
+                               Intent intent = new Intent(listActivity,MainActivity.class);
+                               intent.putExtra("pid",id);
+                               intent.putExtra("ptitle",title);
+                               intent.putExtra("pdescription",descrition);
+                               listActivity.startActivity(intent);
+                           }
+                               if (which == 1)
+                               {
+
+                               }
+
+                       }
+                   }).create().show();
 
                }
            });

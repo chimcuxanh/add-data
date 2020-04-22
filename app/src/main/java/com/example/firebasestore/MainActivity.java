@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     Button mButtonSave, mButtonShow;
     ProgressDialog pd;
     FirebaseFirestore db;
+    String pId, pTitle,pDescription;
 
 
     @Override
@@ -40,20 +41,77 @@ public class MainActivity extends AppCompatActivity {
         mButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //input data
-                String title  = mEditTextTT.getText().toString().trim();
-                String Description = mEditTextD.getText().toString().trim();
-                //function call to upload data
-                uploaddata(title,Description);
+                Bundle bundle = getIntent().getExtras();
+                if(bundle != null)
+                {
+                    String id = pId;
+                    String title  = mEditTextTT.getText().toString().trim();
+                    String Description = mEditTextD.getText().toString().trim();
+                    updatedata(id,title,Description);
+
+                }
+                else
+                    {
+                        //input data
+                        String title  = mEditTextTT.getText().toString().trim();
+                        String Description = mEditTextD.getText().toString().trim();
+                        //function call to upload data
+                        uploaddata(title,Description);
+
+                    }
+
+
 
             }
         });
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null)
+        {
+            actionBar.setTitle("update");
+            mButtonSave.setText("update");
+            //getdata
+            pId = bundle.getString("pid");
+            pTitle = bundle.getString("ptitle");
+            pDescription = bundle.getString("pdescription");
+            // set data
+            mEditTextTT.setText(pTitle);
+            mEditTextD.setText(pDescription);
+
+
+        }
+        else
+            {
+                actionBar.setTitle("add data");
+                mButtonSave.setText("Save");
+            }
 
         mButtonShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ListActivity.class));
                 finish();
+            }
+        });
+    }
+
+    private void updatedata(String id, String title, String description) {
+        pd.setTitle("Update data....");
+        pd.show();
+        db.collection("Document").document(id).
+                update("title",title,"description",description)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        pd.dismiss();
+                        Toast.makeText(MainActivity.this, "updated", Toast.LENGTH_SHORT).show();
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pd.dismiss();
+                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
     }

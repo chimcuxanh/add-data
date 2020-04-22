@@ -1,6 +1,7 @@
 package com.example.firebasestore;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +36,10 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //actionbat and it's title
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("List Data");
+
         db = FirebaseFirestore.getInstance();
         setContentView(R.layout.activity_list);
         maddBtn = findViewById(R.id.addBtn);
